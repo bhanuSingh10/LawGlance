@@ -52,14 +52,24 @@ export function useVoiceInput(
         recognitionRef.current.maxAlternatives = maxAlternatives;
 
         recognitionRef.current.onresult = (event: any) => {
-          let fullTranscript = "";
+          let finalTranscript = "";
 
-          // Rebuild the full transcript from all results
-          for (let i = 0; i < event.results.length; i++) {
-            fullTranscript += event.results[i][0].transcript + " ";
+          // Only process final results to avoid duplicates
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript + " ";
+            }
           }
 
-          setTranscript(fullTranscript.trim());
+          // Only update if we have a final transcript
+          if (finalTranscript) {
+            setTranscript((prev) => {
+              const newTranscript = (prev + " " + finalTranscript).trim();
+              return newTranscript;
+            });
+          }
         };
 
         recognitionRef.current.onerror = (event: any) => {

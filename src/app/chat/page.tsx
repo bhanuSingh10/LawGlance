@@ -6,6 +6,7 @@ import { ChatInput } from "@/components/chat/chat-input";
 import { WelcomeMessage } from "@/components/chat/welcome-message";
 import { RelatedQuestions } from "@/components/chat/related-questions";
 import { TextToSpeechReader } from "@/components/chat/text-to-speech-reader";
+import { LegalNewsTicker } from "@/components/chat/legal-news-ticker";
 import {
   Card,
   CardContent,
@@ -132,6 +133,7 @@ export default function NewChatPage() {
   return (
     <div className="flex flex-col flex-1 h-full">
       <ChatHeader />
+      <LegalNewsTicker />
 
       <div
         className="flex-1 overflow-y-auto px-4 md:px-6 lg:px-8 pb-4 pt-2
